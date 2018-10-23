@@ -13,18 +13,19 @@ public class UserInformation {
 	String lastName;
 	Date dob;
 	String Address;
+	String contactNumber;
 	
 	String PAN_Number;
 	String AADHAR_Number;
 	String UAN_Number;
 	
-	String contactNumber;
-	
 	int comapnyID;
-	String designation;
 	String employeeID;
-	int isOwner;
+	String designation;
+	
 	int roleID;
+	int isOwner;
+	
 	
 	public int getIsOwner() {
 		return isOwner;

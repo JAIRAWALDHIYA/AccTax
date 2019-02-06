@@ -13,7 +13,6 @@ public class Companies {
 	String address;
 	String registerationNumber;
 	Date registerationDate;
-	int ownerID;
 	String landline;
 	String fax;
 	
@@ -51,12 +50,6 @@ public class Companies {
 	}
 	public void setRegisterationDate(Date registerationDate) {
 		this.registerationDate = registerationDate;
-	}
-	public int getOwnerID() {
-		return ownerID;
-	}
-	public void setOwnerID(int ownerID) {
-		this.ownerID = ownerID;
 	}
 	public String getLandline() {
 		return landline;

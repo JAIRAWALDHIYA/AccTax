@@ -20,6 +20,7 @@ public class UserInformation {
 	String UAN_Number;
 	
 	int comapnyID;
+	int officeID;
 	String employeeID;
 	String designation;
 	
@@ -110,5 +111,11 @@ public class UserInformation {
 	}
 	public void setEmployeeID(String employeeID) {
 		this.employeeID = employeeID;
-	}	
+	}
+	public int getOfficeID() {
+		return officeID;
+	}
+	public void setOfficeID(int officeID) {
+		this.officeID = officeID;
+	}
 }

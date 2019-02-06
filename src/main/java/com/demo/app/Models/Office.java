@@ -17,6 +17,7 @@ public class Office {
 	
 	int ownerID;
 	int contactPersonID;
+	int isHeadOffice;
 	
 	public int getOfficeID() {
 		return officeID;
@@ -65,5 +66,11 @@ public class Office {
 	}
 	public void setContactPersonID(int contactPersonID) {
 		this.contactPersonID = contactPersonID;
+	}
+	public int getIsHeadOffice() {
+		return isHeadOffice;
+	}
+	public void setIsHeadOffice(int isHeadOffice) {
+		this.isHeadOffice = isHeadOffice;
 	}
 }

@@ -2,30 +2,59 @@ package com.demo.app.Models;
 
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Component
+@Entity
+@Table(name="UserInformation")
+@EntityListeners(AuditingEntityListener.class)
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class UserInformation {
 	
-	int accountID;
+	@Id
+	private Long accountID;
 	
-	String firstName;
-	String lastName;
-	Date dob;
-	String Address;
-	String contactNumber;
+	/**
+	 * Here we are not generating new accountID as accountID is a foreign key coming from Users model.
+	 * Also User and UserInformation models have one to one relation, therefore the same accountID is common between 
+	 * both tables.
+	 */
+	@OneToOne(fetch = FetchType.LAZY)
+	@MapsId
+	private User user;
 	
-	String PAN_Number;
-	String AADHAR_Number;
-	String UAN_Number;
+	@NotBlank
+	private String firstName;
+	@NotBlank
+	private String lastName;
+	private Date dob;
+	private String Address;
+	private String contactNumber;
 	
-	int comapnyID;
-	int officeID;
-	String employeeID;
-	String designation;
+	private String PAN_Number;
+	private String AADHAR_Number;
+	private String UAN_Number;
+		
+	private int officeID;
+	private String employeeID;
+	private String designation;
 	
-	int roleID;
-	int isOwner;
+	private int roleID;
+	private int isOwner;
 	
 	
 	public int getIsOwner() {
@@ -40,10 +69,10 @@ public class UserInformation {
 	public void setRoleID(int roleID) {
 		this.roleID = roleID;
 	}	
-	public int getAccountID() {
+	public Long getAccountID() {
 		return accountID;
 	}
-	public void setAccountID(int id) {
+	public void setAccountID(Long id) {
 		this.accountID = id;
 	}
 	public String getFirstName() {
@@ -93,12 +122,6 @@ public class UserInformation {
 	}
 	public void setContactNumber(String contactNumber) {
 		this.contactNumber = contactNumber;
-	}
-	public int getComapnyID() {
-		return comapnyID;
-	}
-	public void setComapnyID(int comapnyID) {
-		this.comapnyID = comapnyID;
 	}
 	public String getDesignation() {
 		return designation;

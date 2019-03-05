@@ -2,29 +2,49 @@ package com.demo.app.Models;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Component
+@Entity
+@Table(name="Companies")
+@EntityListeners(AuditingEntityListener.class)
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Companies {
 	
-	int comapnyID;
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Long comapnyID;
+
+	@NotBlank
+	private String name;
+	private String landline;
+	private String fax;
+	private String address;
+	private String registerationNumber;
+	private Date registerationDate;
 	
-	String name;
-	String address;
-	String registerationNumber;
-	Date registerationDate;
-	String landline;
-	String fax;
-	
-	int companyType;
-	int headOffice;
-	int hasMultipleOffices;
+	@Column(name="is_active", nullable=false, columnDefinition= "int default 0")
+	private int isActive;
+	private int companyType;
+	private int headOffice;
+	private int hasMultipleOffices;
 	
 	
-	public int getComapnyID() {
+	public Long getComapnyID() {
 		return comapnyID;
 	}
-	public void setComapnyID(int comapnyID) {
+	public void setComapnyID(Long comapnyID) {
 		this.comapnyID = comapnyID;
 	}
 	public String getName() {
@@ -80,5 +100,11 @@ public class Companies {
 	}
 	public void setHasMultipleOffices(int hasMultipleOffices) {
 		this.hasMultipleOffices = hasMultipleOffices;
+	}
+	public int getIsActive() {
+		return isActive;
+	}
+	public void setIsActive(int isActive) {
+		this.isActive = isActive;
 	}
 }

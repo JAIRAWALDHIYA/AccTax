@@ -2,27 +2,47 @@ package com.demo.app.Models;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Component
+@Entity
+@Table(name="office")
+@EntityListeners(AuditingEntityListener.class)
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Office {
 	
-	int officeID;
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Long officeID;
 	
-	String officeName;
-	String Address;
-	String landline;
-	String fax;
-	Date registerationDate;
+	private Long associatedCompanyID;
+	private String officeName;
+	private String Address;
+	private String landline;
+	private String fax;
+	private Date registerationDate;
 	
-	int ownerID;
-	int contactPersonID;
-	int isHeadOffice;
+	@Column(name="is_active", nullable=false, columnDefinition= "int default 0")
+	private int isActive;
+	private int ownerID;
+	private int contactPersonID;
+	private int isHeadOffice;
 	
-	public int getOfficeID() {
+	public Long getOfficeID() {
 		return officeID;
 	}
-	public void setOfficeID(int officeID) {
+	public void setOfficeID(Long officeID) {
 		this.officeID = officeID;
 	}
 	public String getOfficeName() {
@@ -73,4 +93,16 @@ public class Office {
 	public void setIsHeadOffice(int isHeadOffice) {
 		this.isHeadOffice = isHeadOffice;
 	}
+	public int getIsActive() {
+		return isActive;
+	}
+	public void setIsActive(int isActive) {
+		this.isActive = isActive;
+	}
+	public Long getAssociatedCompanyID() {
+		return associatedCompanyID;
+	}
+	public void setAssociatedCompanyID(Long associatedCompanyID) {
+		this.associatedCompanyID = associatedCompanyID;
+	}	
 }

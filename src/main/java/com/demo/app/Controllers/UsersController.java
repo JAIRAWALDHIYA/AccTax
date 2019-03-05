@@ -1,6 +1,5 @@
 package com.demo.app.Controllers;
 
-import java.util.Hashtable;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -16,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.demo.app.DAO.UserDAO;
 import com.demo.app.Models.User;
-import com.demo.app.Services.UserDAO;
 
 @RestController
 @RequestMapping("/users")
@@ -26,49 +25,51 @@ public class UsersController {
 	@Autowired
 	UserDAO userDAO;
 
-	@PostMapping("/saveUser")
+	@PostMapping("/create")
 	public User createUser(@Valid @RequestBody User user) {
-		return userDAO.save(user);
+		return userDAO.insertUser(user);
 	}
 	
-	@GetMapping("/allUsers")
+	@GetMapping("/all")
 	public List<User> getAllUsers() {
-		return userDAO.findAll();
+		return userDAO.getAllUsers();
 	}
 	
-	@GetMapping("/getUser/{id}")
+	@GetMapping("/get/{id}")
 	public ResponseEntity<User> getUserByID(@PathVariable(value="id") Long accountID) {
 		
-		User user = userDAO.findByID(accountID);
+		User user = userDAO.getUserByID(accountID);
 		if(user == null) {
 			return ResponseEntity.notFound().build();
 		}
 		return ResponseEntity.ok().body(user);
 	}
 	
-	@PutMapping("/updateUser/{id}")
+	@PutMapping("/update/{id}")
 	public ResponseEntity<User> updateUserByID(@PathVariable(value="id") Long accountID, @Valid @RequestBody User userDetails) {
 		
-		User user = userDAO.findByID(accountID);
+		User user = userDAO.getUserByID(accountID);
 		if(user == null) {
 			return ResponseEntity.notFound().build();
 		}
 		user.setEmail(userDetails.getEmail());
 		user.setPassword(userDetails.getPassword());
 		
-		User updateUser = userDAO.save(user);
+		User updateUser = userDAO.insertUser(user);
 		return ResponseEntity.ok().body(updateUser);
 	}
 	
-	@DeleteMapping("/deleteUser/{id}")
+	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<User> deleteUser(@PathVariable(value="id") Long accountID) {
 		
-		User user = userDAO.findByID(accountID);
+		User user = userDAO.getUserByID(accountID);
 		if(user == null) {
 			return ResponseEntity.notFound().build();
 		}
-		userDAO.delete(accountID);
-		return ResponseEntity.ok().build();
+		//We are not hard deleting any entity details.
+		user.setIsActive(0);
+		User deletedUser = userDAO.insertUser(user);
+		return ResponseEntity.ok().body(deletedUser);
 	}
 		
 }

@@ -1,4 +1,4 @@
-package com.demo.app.Services;
+package com.demo.app.DAO;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,19 +15,19 @@ public class UserDAO {
 	@Autowired
 	UserRepository userRepository;
 	
-	public User save(User user) {
+	public User insertUser(User user) {
 		return userRepository.save(user);
 	}
 	
-	public List<User> findAll() {
+	public List<User> getAllUsers() {
 		return userRepository.findAll();
 	}
 	
-	public User findByID(Long accountID) {
+	public User getUserByID(Long accountID) {
 		return userRepository.getOne(accountID);
 	}
 	
-	public void delete(Long accountID) {
+	public void deleteUserByID(Long accountID) {
 		userRepository.deleteById(accountID);
 	}
 }
